@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes, globalModelConfig) => {
 				{{#each references}}
 				{{ @key }}: '{{ this }}',
 				{{/each}}
-			}
+			},
 			{{/if}}
 			{{#if (not (eq (typeOf values) 'undefined'))}}
 			values: ['{{{ join values "', '" }}}'],
