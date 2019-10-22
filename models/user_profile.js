@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes, globalModelConfig) => {
 			references: {
 				model: 'users',
 				key: 'id',
-			}
+			},
 			allowNull: true, 
 		},
 		name: {
