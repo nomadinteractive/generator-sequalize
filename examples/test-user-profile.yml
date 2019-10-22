@@ -1,0 +1,28 @@
+name: user profile
+fields:
+  id:
+    type: int
+    primaryKey: true
+    allowNull: false
+    autoIncrement: true
+  user_id:
+    type: int
+    foreignKey: true
+    references:
+      model: users
+      key: id
+  name: string
+  description: text
+  is_featured: bool
+  status:
+    type: enum
+    values:
+      - draft
+      - published
+      - deleted
+  stage: enum(1, 2,  3)
+  created_at:
+    type: timestamp
+    defaultValue: now()
+  updated_at:
+    type: timestamp
