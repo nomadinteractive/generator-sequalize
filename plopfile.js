@@ -19,10 +19,22 @@ const getFields = (ymlFile) => {
 	const fields = getYmlField(ymlFile, 'fields')
 	const fieldsKeys = Object.keys(fields)
 	for (let i = 0; i < fieldsKeys.length; i += 1) {
-		const val = fields[fieldsKeys[i]]
+		let val = fields[fieldsKeys[i]]
 		// Plain inline data types to object + type field format
 		if (typeof val !== 'object') {
-			fields[fieldsKeys[i]] = { type: val }
+			let newFieldScheme = {}
+			if (val.indexOf('+') !== -1) {
+				newFieldScheme.allowNull = false
+				val = val.replace(/\+/g, '')
+			}
+			if (val.indexOf('#') !== -1) { // pkey
+				newFieldScheme.primaryKey = true
+				newFieldScheme.allowNull = false
+				newFieldScheme.autoIncrement = true
+				val = val.replace(/\#/g, '')
+			}
+			newFieldScheme.type = val
+			fields[fieldsKeys[i]] = newFieldScheme
 		}
 		// Convert inline enum data type to type and values fields
 		if (fields[fieldsKeys[i]].type.substr(0, 4) === 'enum'
@@ -104,13 +116,13 @@ module.exports = (plop) => {
 			}
 		],
         actions: [
-			// previewAction,
-			{
-				type: 'add',
-				path: './models/{{ snakeCase (getName yml) }}.js',
-				templateFile: templateFilePath,
-				force: true,
-			}
+			previewAction,
+			// {
+			// 	type: 'add',
+			// 	path: './models/{{ snakeCase (getName yml) }}.js',
+			// 	templateFile: templateFilePath,
+			// 	force: true,
+			// }
 		]
     })
 }
