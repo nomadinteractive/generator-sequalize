@@ -1,17 +1,13 @@
 name: user profile
 fields:
-  id:
-    type: int
-    primaryKey: true
-    allowNull: false
-    autoIncrement: true
+  id: int#
   user_id:
     type: int
     foreignKey: true
     references:
       model: users
       key: id
-  name: string
+  name: string+
   description: text
   is_featured: bool
   status:

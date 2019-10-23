@@ -21,6 +21,11 @@ fields:
   created_at: timestamp
 ```
 
+Few additional markers in simple "type" annotation to be extended with:
+
+- "#" character designates primaryKey (also adds required: true, allowNull: false, autoIncrement: true options) (i.e: ```id: int#```)
+- "+" character designates allowNull: false (i.e: ```name: string+```)
+
 
 ### Install Run
 
