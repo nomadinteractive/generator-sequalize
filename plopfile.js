@@ -84,6 +84,8 @@ const getSequalizeType = (type) => {
 }
 
 module.exports = (plop) => {
+	console.log('pwd', path.pwd)
+	
 	// Extended Handlebar Helpers
 	plop.addHelper('eq', helpers.eq)
 	plop.addHelper('not', helpers.not)
