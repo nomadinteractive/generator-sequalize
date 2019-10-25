@@ -1,4 +1,7 @@
 #!/usr/bin/env node
 
-console.log('generator executable here!')
+const {Plop, run} = require('plop')
 
+Plop.launch({
+	cwd: __dirname,
+}, run)
