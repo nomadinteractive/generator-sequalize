@@ -1,5 +1,5 @@
 module.exports = {
-    model: {
+    sequalize: {
         path: path.join(__dirname, 'models')
     }
 }

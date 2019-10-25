@@ -9,8 +9,8 @@
   "clean": "npm run check"
  },
  "bin": {
-	"nomad-generator-sequalize": "plop model"
-},
+	"nomad-generator-sequalize": "./bin.js"
+ },
  "author": "",
  "license": "ISC",
  "dependencies": {
