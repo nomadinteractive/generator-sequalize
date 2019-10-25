@@ -3,7 +3,22 @@ const fs = require('fs')
 const YAML = require('yaml')
 const helpers = require('handlebars-helpers')()
 
-const templateFilePath = 'model-template.hbs'
+const projectDir = process.cwd()
+const projectDirGeneratorConfigFilePath = path.join(projectDir, '.nomad-generators-config')
+const nodeModuleDir = __dirname
+const templateFilePath = path.join(nodeModuleDir, 'model-template.hbs')
+
+const getGeneratorsConfig = (configFilePath) => {
+	const configFileStr = fs.readFileSync(path.resolve(configFilePath), 'utf8')
+	const config = JSON.parse(configFileStr)
+	return config
+}
+
+const validateConfig = (config) => {
+	if (typeof config.sequalize !== 'object') return false
+	if (typeof config.sequalize.models_path !== 'string') return false
+	return true
+}
 
 const getYmlField = (ymlFile, fieldName) => {
 	const yamlFileStr = fs.readFileSync(path.resolve(ymlFile), 'utf8')
@@ -83,9 +98,14 @@ const getSequalizeType = (type) => {
 	}
 }
 
+const config = getGeneratorsConfig(projectDirGeneratorConfigFilePath)
+if (!validateConfig(config)) {
+	console.log("Generator configuration file (.nomad-generators-config) is not defined or not valid!")
+	process.exit(-1)
+}
+const modelPath = path.resolve(config.sequalize.models_path)
+
 module.exports = (plop) => {
-	console.log('pwd', path.pwd)
-	
 	// Extended Handlebar Helpers
 	plop.addHelper('eq', helpers.eq)
 	plop.addHelper('not', helpers.not)
@@ -118,13 +138,13 @@ module.exports = (plop) => {
 			}
 		],
         actions: [
-			previewAction,
-			// {
-			// 	type: 'add',
-			// 	path: './models/{{ snakeCase (getName yml) }}.js',
-			// 	templateFile: templateFilePath,
-			// 	force: true,
-			// }
+			// previewAction,
+			{
+				type: 'add',
+				path: modelPath + '/{{ snakeCase (getName yml) }}.js',
+				templateFile: templateFilePath,
+				force: true,
+			}
 		]
     })
 }
