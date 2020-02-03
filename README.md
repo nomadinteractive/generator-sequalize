@@ -1,4 +1,4 @@
-# Sequlize model generator with "Plop"
+# Sequlize model generator with Plop
 
 See "ployfile.js" for simple breakdown of inputs, actions for the sequalize model generation.
 
@@ -13,9 +13,9 @@ A sequalize model has to be minimally defined in some format. The easiest human 
 name: Test Model
 fields:
   id:
-	type: int
-	primaryKey: true
-	autoIncrement: true
+    type: int
+    primaryKey: true
+    autoIncrement: true
   name: string
   status: enum(pending, active, disabled)
   created_at: timestamp
@@ -53,9 +53,9 @@ If your sequalize models stored in a different folder, define in this configurat
 Add the dependency and script to your package.json
 
 devDependencies (or dependencies):
-```"nomad-generator-sequalize": "git+ssh://git@ship.nomadinteractive.co:nomad-interactive/generator-sequalize.git"```
+```npm install --save-dev nomad-generator-sequalize```
 
-scripts:
+then, add generator command to your scripts in package.json:
 ```"generate-model": "nomad-generator-sequalize"```
 
 Then, run
@@ -72,3 +72,6 @@ You can also send the yml parameter in this command as argument like:
 
 ```npm run generate-model new-model.yml```
 
+## License
+
+[MIT](LICENSE.md)
